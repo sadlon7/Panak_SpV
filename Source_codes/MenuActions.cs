@@ -22,4 +22,8 @@ public class MenuActions : MonoBehaviour {
 	public void CheatUnlock(){
 		PlayerPrefs.SetInt("maxLevel",25);
 	}
+
+	public void QuitGame(){
+		Application.Quit();
+	}
 }

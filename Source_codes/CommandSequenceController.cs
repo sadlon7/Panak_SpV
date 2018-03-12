@@ -13,11 +13,12 @@ public class CommandSequenceController : MonoBehaviour {
 	public Sprite downButton;
 
 
-	// Use this for initialization
+	// Pridava tlacidla do dolnej listy
 	void Start () {
 
 		if (commandText.text.Equals ("L")) {
 			this.GetComponent<Image>().sprite = leftButton;
+//			this.GetComponent<Image>().color = new Color32(128,255,55,100);
 		}
 		else if(commandText.text.Equals ("R")){
 			this.GetComponent<Image>().sprite = rightButton;

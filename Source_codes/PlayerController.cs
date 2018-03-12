@@ -34,24 +34,26 @@ public class PlayerController : MonoBehaviour {
 		this.GetComponent<RectTransform>().localPosition = new Vector3(0f,0f,0f);
 	}
 
-	public IEnumerator move(string d) {
+	public IEnumerator move(string d, int i) {
 
-		Debug.Log ("TU SOM str = " + d);
+//		Debug.Log ("d = " + d);
+
+//		Debug.Log ("TU SOM str = " + d);
 		
-		coroutineRunning  = true;
+		coroutineRunning = true;
 		switch (d) {
 		case "u":
-			if(canMove(posX,posY-1)){
+			if (canMove (posX, posY - 1)) {
 				posY -= 1;
 			}
 			break;
 		case "l":	
-			if(canMove(posX-1,posY)){
+			if (canMove (posX - 1, posY)) {
 				posX -= 1;
 			}
 			break;
 		case "r":
-			if(canMove(posX+1,posY)){
+			if (canMove (posX + 1, posY)) {
 				posX += 1;
 			}
 			break;
@@ -64,30 +66,46 @@ public class PlayerController : MonoBehaviour {
 
 		}
 
-		while(canDrop2(posX,posY) && canMove(posX,posY+1)){
-			this.transform.SetParent(gamecontroller.GetComponent<PlayController> ().plocha.transform.GetChild (posY).transform.GetChild (posX).transform) ;
-			this.GetComponent<RectTransform>().localPosition = new Vector3(0f,0f,0f);
-			yield return new WaitForSeconds(.25f);
+		while (canDrop2 (posX, posY) && canMove (posX, posY + 1)) {
+			this.transform.SetParent (gamecontroller.GetComponent<PlayController> ().plocha.transform.GetChild (posY).transform.GetChild (posX).transform);
+			this.GetComponent<RectTransform> ().localPosition = new Vector3 (0f, 0f, 0f);
+			yield return new WaitForSeconds (.25f);
 			Debug.Log ("Dostal som sa do canDrop2");
 			posY += 1;
 		}
 
 
 
-		this.transform.SetParent(gamecontroller.GetComponent<PlayController> ().plocha.transform.GetChild (posY).transform.GetChild (posX).transform) ;
-		this.GetComponent<RectTransform>().localPosition = new Vector3(0f,0f,0f);
-		
+		this.transform.SetParent (gamecontroller.GetComponent<PlayController> ().plocha.transform.GetChild (posY).transform.GetChild (posX).transform);
+		this.GetComponent<RectTransform> ().localPosition = new Vector3 (0f, 0f, 0f);
+
+		GameObject sekvenciaPrikazov = GameObject.Find ("Canvas/SekvenciaPrikazov");
+		sekvenciaPrikazov.transform.GetChild(i).GetComponent<Image>().color = new Color32(240,130,40,255);
+
+		if(i >= 1){    // Odfarbovanie predoslo zafarbenych tlacidiel
+			sekvenciaPrikazov.transform.GetChild(i-1).GetComponent<Image>().color = new Color32(255,255,255,255);	
+		}
+
+
+
+
+
 		// PAUZA MEDZI SKOKMI
-		yield return new WaitForSeconds(.25f);
+		yield return new WaitForSeconds(.4f);
+
+		if (i == sekvenciaPrikazov.transform.childCount-1) {
+			sekvenciaPrikazov.transform.GetChild(i).GetComponent<Image>().color = new Color32(255,255,255,255);
+		}
 
 		coroutineRunning = false;
 
 	}
 	
 	public IEnumerator go(string sequence) {
+
 		yield return new WaitForSeconds(.1f);
 		for(int i=0; i<sequence.Length; i++) {
-			StartCoroutine(move(sequence[i].ToString()));
+			StartCoroutine(move(sequence[i].ToString(), i));
 			while(coroutineRunning) {
 				yield return new WaitForSeconds(.1f);
 			}
