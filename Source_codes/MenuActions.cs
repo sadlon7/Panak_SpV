@@ -24,6 +24,7 @@ public class MenuActions : MonoBehaviour {
 	}
 
 	public void QuitGame(){
+		//Debug.Log ("Skoncil som appku");
 		Application.Quit();
 	}
 }

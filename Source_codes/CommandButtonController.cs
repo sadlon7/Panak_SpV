@@ -22,7 +22,35 @@ public class CommandButtonController : MonoBehaviour {
 		temp.transform.SetParent(sequenceHolder.transform);
 		
 	}
+
+	public void incrementLoop(){
+
+		GameObject ForStart = GameObject.Find ("Canvas/PanelPrikazov/ForStart");
+		int c = int.Parse (ForStart.GetComponent<CommandButtonController> ().command);
+
+		if (c == 9){
+			return;
+		}
 	
+		ForStart.GetComponent<Image> ().sprite = commandIconPrefab.GetComponent<CommandSequenceController> ().repeatStart [c-1];
+		ForStart.GetComponent<CommandButtonController> ().command = (c+1).ToString();
+	
+	}
+
+	public void decrementLoop(){
+
+		GameObject ForStart = GameObject.Find ("Canvas/PanelPrikazov/ForStart");
+		int c = int.Parse (ForStart.GetComponent<CommandButtonController> ().command);
+
+		if (c == 2){
+			return;
+		}
+
+		ForStart.GetComponent<Image> ().sprite = commandIconPrefab.GetComponent<CommandSequenceController> ().repeatStart [c-3];
+		ForStart.GetComponent<CommandButtonController> ().command = (c-1).ToString();
+
+	}
+
 	void Start () {
 		
 	}

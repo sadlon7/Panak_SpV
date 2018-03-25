@@ -12,6 +12,9 @@ public class CommandSequenceController : MonoBehaviour {
 	public Sprite upButton;
 	public Sprite downButton;
 
+	public Sprite [] repeatStart;
+	public Sprite repeatEnd;
+
 
 	// Pridava tlacidla do dolnej listy
 	void Start () {
@@ -28,6 +31,15 @@ public class CommandSequenceController : MonoBehaviour {
 		}
 		else if(commandText.text.Equals ("D")){
 			this.GetComponent<Image>().sprite = downButton;
+		}
+
+		else if(commandText.text.Equals ("E")){
+			this.GetComponent<Image>().sprite = repeatEnd;
+		}
+
+		else //if(commandText.text.Equals ("2"))
+		{
+			this.GetComponent<Image>().sprite = repeatStart[int.Parse(commandText.text)-2];
 		}
 	}
 

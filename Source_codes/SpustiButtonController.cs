@@ -9,7 +9,14 @@ public class SpustiButtonController : MonoBehaviour {
 
 	public string commandFromSequence;
 
+	public GameObject WrongInput;
+
 	public void run() {
+
+		WrongInput.SetActive (false);
+
+
+
 		playerController.GetComponent<PlayerController>().setPosition();
 		commandFromSequence = "";
 		
@@ -17,8 +24,26 @@ public class SpustiButtonController : MonoBehaviour {
 
 			commandFromSequence+=sequenceGameobject.transform.GetChild(i).GetComponent<CommandSequenceController>().commandValue;
 		}
+	
+		// sem pojde algoritmus
+
+
+
+
+
+
+
+
+
 		gameController.GetComponent<PlayController>().commands = commandFromSequence;
-		gameController.GetComponent<PlayController>().play();
+
+		if (!gameController.GetComponent<PlayController> ().play ()) {
+			WrongInput.SetActive (true);
+		}
+
+
+
+		//Debug.Log ("Vykonavana sekvencia = " + commandFromSequence);
 
 	}
 	// Use this for initialization
