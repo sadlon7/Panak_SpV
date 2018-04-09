@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommandButtonController : MonoBehaviour {
+public class CommandOwnButtonController : MonoBehaviour {
 	public GameObject gameController;
 	public GameObject sequenceHolder;
 	public GameObject playerGO;
@@ -13,12 +13,12 @@ public class CommandButtonController : MonoBehaviour {
 	public void addToStack() {
 
 		// OBMEDZENIE POCTU KROKOV
-		if(gameController.GetComponent<PlayController>().movesCount <= sequenceHolder.transform.childCount){
+		if(gameController.GetComponent<PlayOwnController>().movesCount <= sequenceHolder.transform.childCount){
 			return;
 		}
 
 //		Debug.Log (gameController.GetComponent<PlayController>().movesCount.ToString());
-
+		Debug.Log("SOM TU A PRIDAVAM DOLE ");
 		GameObject temp = Instantiate(commandIconPrefab);
 		temp.GetComponent<CommandSequenceController>().commandValue =  command;
 		temp.GetComponent<CommandSequenceController>().commandText.text =  command.ToUpper();
@@ -29,28 +29,28 @@ public class CommandButtonController : MonoBehaviour {
 	public void incrementLoop(){
 
 		GameObject ForStart = GameObject.Find ("Canvas/PanelPrikazov/ForStart");
-		int c = int.Parse (ForStart.GetComponent<CommandButtonController> ().command);
+		int c = int.Parse (ForStart.GetComponent<CommandOwnButtonController> ().command);
 
 		if (c == 9){
 			return;
 		}
 	
 		ForStart.GetComponent<Image> ().sprite = commandIconPrefab.GetComponent<CommandSequenceController> ().repeatStart [c-1];
-		ForStart.GetComponent<CommandButtonController> ().command = (c+1).ToString();
+		ForStart.GetComponent<CommandOwnButtonController> ().command = (c+1).ToString();
 	
 	}
 
 	public void decrementLoop(){
 
 		GameObject ForStart = GameObject.Find ("Canvas/PanelPrikazov/ForStart");
-		int c = int.Parse (ForStart.GetComponent<CommandButtonController> ().command);
+		int c = int.Parse (ForStart.GetComponent<CommandOwnButtonController> ().command);
 
 		if (c == 2){
 			return;
 		}
 
 		ForStart.GetComponent<Image> ().sprite = commandIconPrefab.GetComponent<CommandSequenceController> ().repeatStart [c-3];
-		ForStart.GetComponent<CommandButtonController> ().command = (c-1).ToString();
+		ForStart.GetComponent<CommandOwnButtonController> ().command = (c-1).ToString();
 
 	}
 

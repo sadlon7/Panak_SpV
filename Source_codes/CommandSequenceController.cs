@@ -39,6 +39,7 @@ public class CommandSequenceController : MonoBehaviour {
 
 		else //if(commandText.text.Equals ("2"))
 		{
+			
 			this.GetComponent<Image>().sprite = repeatStart[int.Parse(commandText.text)-2];
 		}
 	}

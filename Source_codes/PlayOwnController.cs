@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class PlayController : MonoBehaviour {
+public class PlayOwnController : MonoBehaviour {
 
 	public Sprite floorSprite;
 	public Sprite wallSprite;
@@ -20,23 +20,39 @@ public class PlayController : MonoBehaviour {
 	public List<int> indexOfActual;
 	public GameObject player;
 
+
 	public GameObject MaxSequenceTile;
 
 
+	public void readFile()
+	{
+		//PlayerPrefs.SetInt ("indexOfLastLevel", 0);
+		//PlayerPrefs.SetString ("mylevel0", "");
+		//Debug.Log ("TOTO JE CESTA: " + textWrap);
+		Debug.Log (PlayerPrefs.GetString ("mylevel0").ToString());
+		string text = PlayerPrefs.GetString ("mylevel0").ToString();
 
 
+		string[] lines = text.Split ('\n');
+		this.movesCount = int.Parse(lines[0]);
+
+		for(int i=1;i<lines.Length-1;i++){
+			this.plochaArr [i-1] = lines [i];
+		}
+		//reader.Close();
+	}
 
 	public bool play(){
-		
+
 		if (!isRightCommand ()) {
-			
+
 			return false;
 		}
 		finalCommands = "";
 		indexOfActual = new List<int> ();
 		createSequence (commands, 0);
 
-		StartCoroutine(player.GetComponent<PlayerController> ().go (finalCommands, indexOfActual));
+		StartCoroutine(player.GetComponent<PlayerOwnController> ().go (finalCommands, indexOfActual));
 
 		return true;
 	}
@@ -69,7 +85,7 @@ public class PlayController : MonoBehaviour {
 	public void createSequence(string ret, int ix) {
 
 		for(int i=0; i<ret.Length; i++) {
-			
+
 			if (ret [i] == 'r' || ret [i] == 'l' || ret [i] == 'u' || ret [i] == 'd') {
 				finalCommands += ret [i];
 
@@ -119,35 +135,17 @@ public class PlayController : MonoBehaviour {
 		}
 	}
 
-	public void readFile(string lvl)
-	{
-		//string path = "Levely/level"+lvl+".txt";
-		//StreamReader reader = new StreamReader(path);
 
-		TextAsset textWrap = (TextAsset)Resources.Load("Levely/level"+lvl,typeof(TextAsset));
-
-		//Debug.Log ("TOTO JE CESTA: " + textWrap);
-
-		string text = textWrap.ToString();
-
-		string[] lines = text.Split ('\n');
-		this.movesCount = int.Parse(lines[0]);
-
-		for(int i=1;i<lines.Length-1;i++){
-			this.plochaArr [i-1] = lines [i];
-		}
-		//reader.Close();
-	}
-	public void loadLevel(int level) {
-		readFile (level.ToString());
+	public void loadLevel() {
+		readFile ();
 
 		loadMaxCountOfTiles ();
 
 		for (int i = 0; i < plocha.transform.childCount; i++) {
 			for (int j = 0; j < plocha.transform.GetChild(i).childCount; j++) {
-				plocha.transform.GetChild(i).transform.GetChild(j).GetComponent<PlayGridTileController> ().tileType = plochaArr [i][j].ToString();
-				plocha.transform.GetChild(i).transform.GetChild(j).GetComponent<PlayGridTileController> ().init();
-					
+				plocha.transform.GetChild(i).transform.GetChild(j).GetComponent<PlayOwnGridTileController> ().tileType = plochaArr [i][j].ToString();
+				plocha.transform.GetChild(i).transform.GetChild(j).GetComponent<PlayOwnGridTileController> ().init();
+
 			}
 		}
 
@@ -156,7 +154,7 @@ public class PlayController : MonoBehaviour {
 	// Funkcia pre nacitanie max poctu policok na spodu tej obrazovky
 	public void loadMaxCountOfTiles(){
 
-		Debug.Log ("Volam PLAY");
+		Debug.Log ("Volam PLAY OWN");
 
 		GameObject maxPocetPrikazov = GameObject.Find ("Canvas/MaxPocetPrikazov");
 		for (int i = 0; i < this.movesCount; i++) {
@@ -170,19 +168,18 @@ public class PlayController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		this.movesCount = movesCount;
-		this.plochaArr = plochaArr;
+		//this.movesCount = movesCount;
+		//this.plochaArr = plochaArr;
 
-		// AKY LEVEL
-		int lvl = PlayerPrefs.GetInt("selectedLevel");
-		loadLevel(lvl);
-		
+		loadLevel();
+
 		this.play();
 		//PlayerPrefs.SetInt("maxLevel",25);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
+
 }

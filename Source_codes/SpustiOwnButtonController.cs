@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpustiButtonController : MonoBehaviour {
+public class SpustiOwnButtonController : MonoBehaviour {
 	public GameObject gameController;
 	public GameObject playerController;
 	public GameObject sequenceGameobject;
@@ -19,7 +19,7 @@ public class SpustiButtonController : MonoBehaviour {
 
 
 
-		playerController.GetComponent<PlayerController>().setPosition();
+		playerController.GetComponent<PlayerOwnController>().setPosition();
 		commandFromSequence = "";
 		
 		for(int i=0; i<sequenceGameobject.transform.childCount;i++){
@@ -37,9 +37,9 @@ public class SpustiButtonController : MonoBehaviour {
 
 
 
-		gameController.GetComponent<PlayController>().commands = commandFromSequence;
+		gameController.GetComponent<PlayOwnController>().commands = commandFromSequence;
 
-		if (!gameController.GetComponent<PlayController> ().play ()) {
+		if (!gameController.GetComponent<PlayOwnController> ().play ()) {
 			WrongInput.SetActive (true);
 		}
 
