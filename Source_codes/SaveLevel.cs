@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class SaveLevel : MonoBehaviour {
 
 	private string level = "";
+	public GameObject SavedPopUpWindow;
+	public GameObject MaxPopUpWindow;
 
 	// Use this for initialization
 	void Start () {
+		SavedPopUpWindow.SetActive (false);
+		MaxPopUpWindow.SetActive (false);
 		
 	}
 	
@@ -18,7 +22,21 @@ public class SaveLevel : MonoBehaviour {
 	}
 
 	public void Save() {
-		level = "20\n";
+
+		int indexOfLast = PlayerPrefs.GetInt ("indexOfLastLevel");
+
+		if (indexOfLast >= 25) {
+			MaxPopUpWindow.SetActive (true);
+			return;
+		}
+
+		SavedPopUpWindow.GetComponentInChildren<Text> ().GetComponent<Text> ().text = "ULOŽIL SI ÚLOHU " + (indexOfLast + 1);
+		SavedPopUpWindow.SetActive (true);
+
+
+
+
+		level = "32\n";
 			
 		GameObject plocha = GameObject.Find ("Canvas/Plocha");
 
@@ -47,13 +65,18 @@ public class SaveLevel : MonoBehaviour {
 			}
 			level += '\n';
 		}
-		int indexOfLast = PlayerPrefs.GetInt ("indexOfLastLevel");
+
+		indexOfLast++;
+		PlayerPrefs.SetInt ("indexOfLastLevel", indexOfLast);
+
+
 		string nameOfLevel = "mylevel" + indexOfLast;
 		PlayerPrefs.SetString (nameOfLevel, level);
 
-//		PlayerPrefs.SetInt ("indexOfLastLevel", indexOfLast + 1);
 
 
-		//		sekvenciaPrikazov.transform.GetChild(indexOfActual[i-1]).GetComponent<Image>().color = new Color32(255,255,255,255);	
+
+
+
 	}
 }

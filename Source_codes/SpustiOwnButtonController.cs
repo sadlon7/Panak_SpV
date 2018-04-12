@@ -31,12 +31,6 @@ public class SpustiOwnButtonController : MonoBehaviour {
 
 
 
-
-
-
-
-
-
 		gameController.GetComponent<PlayOwnController>().commands = commandFromSequence;
 
 		if (!gameController.GetComponent<PlayOwnController> ().play ()) {

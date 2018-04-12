@@ -24,13 +24,16 @@ public class PlayOwnController : MonoBehaviour {
 	public GameObject MaxSequenceTile;
 
 
-	public void readFile()
+	public void readFile(int lvl)
 	{
+		
 		//PlayerPrefs.SetInt ("indexOfLastLevel", 0);
 		//PlayerPrefs.SetString ("mylevel0", "");
-		//Debug.Log ("TOTO JE CESTA: " + textWrap);
-		Debug.Log (PlayerPrefs.GetString ("mylevel0").ToString());
-		string text = PlayerPrefs.GetString ("mylevel0").ToString();
+		//Debug.Log (PlayerPrefs.GetString ("mylevel0").ToString());
+	
+		string text = PlayerPrefs.GetString ("mylevel" + lvl.ToString()).ToString();
+//		string text = PlayerPrefs.GetString ("mylevel").ToString();
+
 
 
 		string[] lines = text.Split ('\n');
@@ -136,10 +139,10 @@ public class PlayOwnController : MonoBehaviour {
 	}
 
 
-	public void loadLevel() {
-		readFile ();
+	public void loadLevel(int lvl) {
+		readFile (lvl);
 
-		loadMaxCountOfTiles ();
+//		loadMaxCountOfTiles ();
 
 		for (int i = 0; i < plocha.transform.childCount; i++) {
 			for (int j = 0; j < plocha.transform.GetChild(i).childCount; j++) {
@@ -170,8 +173,8 @@ public class PlayOwnController : MonoBehaviour {
 	void Start () {
 		//this.movesCount = movesCount;
 		//this.plochaArr = plochaArr;
-
-		loadLevel();
+		int lvl = PlayerPrefs.GetInt("selectedOwnLevel");
+		loadLevel(lvl);
 
 		this.play();
 		//PlayerPrefs.SetInt("maxLevel",25);
