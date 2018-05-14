@@ -34,8 +34,6 @@ public class PlayOwnController : MonoBehaviour {
 		string text = PlayerPrefs.GetString ("mylevel" + lvl.ToString()).ToString();
 //		string text = PlayerPrefs.GetString ("mylevel").ToString();
 
-
-
 		string[] lines = text.Split ('\n');
 		this.movesCount = int.Parse(lines[0]);
 
@@ -81,7 +79,6 @@ public class PlayOwnController : MonoBehaviour {
 			Debug.Log ("Neprazdny zasobnik, zly sting");
 			return false;
 		}
-		Debug.Log ("string OK");
 		return true;
 	}
 
@@ -142,7 +139,7 @@ public class PlayOwnController : MonoBehaviour {
 	public void loadLevel(int lvl) {
 		readFile (lvl);
 
-//		loadMaxCountOfTiles ();
+		loadMaxCountOfTiles ();
 
 		for (int i = 0; i < plocha.transform.childCount; i++) {
 			for (int j = 0; j < plocha.transform.GetChild(i).childCount; j++) {
@@ -157,7 +154,7 @@ public class PlayOwnController : MonoBehaviour {
 	// Funkcia pre nacitanie max poctu policok na spodu tej obrazovky
 	public void loadMaxCountOfTiles(){
 
-		Debug.Log ("Volam PLAY OWN");
+		//Debug.Log ("Volam funkciu loadMaxCountOfTiles()");
 
 		GameObject maxPocetPrikazov = GameObject.Find ("Canvas/MaxPocetPrikazov");
 		for (int i = 0; i < this.movesCount; i++) {

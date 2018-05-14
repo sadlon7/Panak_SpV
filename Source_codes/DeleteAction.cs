@@ -41,6 +41,7 @@ public class DeleteAction : MonoBehaviour {
 			isPressed = true;
 		}
 		//UnityEngine.Debug.Log ("Spustil");
+
 	}
 
 	public bool IsInteractable(int lvl){
@@ -69,6 +70,10 @@ public class DeleteAction : MonoBehaviour {
 		PopUpWindow.SetActive (false);
 	}
 
+	public void OpenOwnLevelCreationScreen(){
+		SceneManager.LoadScene ("VlastnaHra");
+	}
+
 	public void DeleteLevel(){
 		int lastIndex = PlayerPrefs.GetInt ("indexOfLastLevel");
 		int selectedLevel = PlayerPrefs.GetInt ("selectedOwnLevel");
@@ -79,8 +84,23 @@ public class DeleteAction : MonoBehaviour {
 		}
 
 		PlayerPrefs.SetInt("indexOfLastLevel", lastIndex - 1);
-			
-			
+
+		PopUpWindow.SetActive (false);
+		SceneManager.LoadScene ("VlastnyLevelMenu");
+
+	}
+
+	public void EditLevel ()
+	{
+		int lastIndex = PlayerPrefs.GetInt ("indexOfLastLevel");
+		int selectedLevel = PlayerPrefs.GetInt ("selectedOwnLevel");
+		string levelName = "mylevel" + PlayerPrefs.GetInt ("selectedOwnLevel");
+		for (int i = selectedLevel; i < lastIndex; i++) {
+			string levelString = PlayerPrefs.GetString ("mylevel" + (i + 1));
+			PlayerPrefs.SetString ("mylevel" + i, levelString);
+		}
+
+		PlayerPrefs.SetInt ("indexOfLastLevel", lastIndex - 1);
 
 		PopUpWindow.SetActive (false);
 		SceneManager.LoadScene ("VlastnyLevelMenu");

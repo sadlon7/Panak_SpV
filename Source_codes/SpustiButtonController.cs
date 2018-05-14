@@ -13,7 +13,7 @@ public class SpustiButtonController : MonoBehaviour {
 
 	public void run() {
 
-		Debug.Log(PlayerPrefs.GetString("levelik"));
+		//Debug.Log(PlayerPrefs.GetString("levelik"));
 
 		WrongInput.SetActive (false);
 

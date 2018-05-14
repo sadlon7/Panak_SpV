@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject nextButton;
 	public GameObject GameOver;
+	public GameObject TotalGameOver;
 
 
 	// Use this for initialization
@@ -128,13 +129,26 @@ public class PlayerController : MonoBehaviour {
 
 			if (maxLevel == selectedLevel && selectedLevel <= 25) {
 				maxLevel++;
+
+				if (maxLevel >= 25) {
+					maxLevel = 25;
+				}
+
 				PlayerPrefs.SetInt("maxLevel", maxLevel);
 				nextButton.GetComponent<Button> ().interactable = true;
+			} 
+
+			if (selectedLevel == 25) {
+				Debug.Log("FINISH GAME");
+				yield return new WaitForSeconds(2f);
+				TotalGameOver.SetActive (true);
 			}
 		}
 	}	
 
 	void Start () {
+		TotalGameOver.SetActive (false);
+
 		defPosY=6;
 		defPosX=1;
 

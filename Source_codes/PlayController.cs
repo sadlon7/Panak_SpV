@@ -22,8 +22,7 @@ public class PlayController : MonoBehaviour {
 
 	public GameObject MaxSequenceTile;
 
-
-
+	private Coroutine cor;
 
 
 	public bool play(){
@@ -36,9 +35,13 @@ public class PlayController : MonoBehaviour {
 		indexOfActual = new List<int> ();
 		createSequence (commands, 0);
 
-		StartCoroutine(player.GetComponent<PlayerController> ().go (finalCommands, indexOfActual));
+		cor = StartCoroutine(player.GetComponent<PlayerController> ().go (finalCommands, indexOfActual));
 
 		return true;
+	}
+
+	public void stop(){
+		StopCoroutine (cor);
 	}
 
 
@@ -119,14 +122,41 @@ public class PlayController : MonoBehaviour {
 		}
 	}
 
+//	public void readFile(string lvl)
+//	{
+////		string path = "Levely/level"+lvl+".txt";
+////		StreamReader reader = new StreamReader(path);
+//
+//		object tmp = Resources.Load("Levely/level"+lvl,typeof(TextAsset));
+//		TextAsset textWrap = (TextAsset) tmp;
+//
+//
+//
+//
+//		//Debug.Log ("TOTO JE CESTA: " + textWrap);
+//		string text = textWrap.ToString();
+////		string text = reader.ToString();
+//
+//		string[] lines = text.Split ('\n');
+//		this.movesCount = int.Parse(lines[0]);
+//
+//		for(int i=1;i<lines.Length-1;i++){
+//			this.plochaArr [i-1] = lines [i];
+//		}
+//		//reader.Close();
+//
+//	}
+
 	public void readFile(string lvl)
 	{
-		//string path = "Levely/level"+lvl+".txt";
-		//StreamReader reader = new StreamReader(path);
 
-		TextAsset textWrap = (TextAsset)Resources.Load("Levely/level"+lvl,typeof(TextAsset));
+		object tmp = Resources.Load("Levely/level"+lvl,typeof(TextAsset));
+		TextAsset textWrap = (TextAsset) tmp;
 
-		//Debug.Log ("TOTO JE CESTA: " + textWrap);
+//		string path = "Levely/level"+lvl+".txt";
+//		StreamReader reader = new StreamReader(path); 
+//		Debug.Log("VYPIS LEVELU : " + reader.ReadToEnd());
+//		string text = reader.ToString ();
 
 		string text = textWrap.ToString();
 
@@ -136,8 +166,13 @@ public class PlayController : MonoBehaviour {
 		for(int i=1;i<lines.Length-1;i++){
 			this.plochaArr [i-1] = lines [i];
 		}
-		//reader.Close();
+
+//		reader.Close();
+
 	}
+
+
+
 	public void loadLevel(int level) {
 		readFile (level.ToString());
 

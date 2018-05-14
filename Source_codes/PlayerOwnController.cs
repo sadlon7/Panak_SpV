@@ -93,11 +93,7 @@ public class PlayerOwnController : MonoBehaviour {
 
 			sekvenciaPrikazov.transform.GetChild(indexOfActual[i]).GetComponent<Image>().color = new Color32(255,255,255,255);
 		}
-
-
-
-
-
+			
 		coroutineRunning = false;
 
 	}
